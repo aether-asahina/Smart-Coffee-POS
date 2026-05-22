@@ -580,4 +580,3 @@ window.loadTransactions  = loadTransactions;
 window.toggleTheme     = toggleTheme;
 window.setPayment      = setPayment;
 window.showToast       = showToast; // dipakai oleh cart.js
-
