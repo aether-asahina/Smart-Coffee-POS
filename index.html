@@ -4,524 +4,305 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Angkringan Koes Coffee — Kasir</title>
-<link rel="stylesheet" href="style.css">
-
-  
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
+<!-- ═══════ LOGIN ═══════ -->
 <div id="loginPage" class="login-page">
   <div class="login-card">
     <div class="login-logo">☕</div>
     <h1>Koes Coffee</h1>
-    <p>Sistem Kasir & Keuangan</p>
-
-    <input type="email" id="loginUser" placeholder="Email" />
+    <p>Sistem Kasir &amp; Keuangan</p>
+    <input type="email"    id="loginUser" placeholder="Email" />
     <input type="password" id="loginPass" placeholder="Password" />
-    
-
-    <button onclick="login()" class="login-btn">
-      Masuk
-    </button>
+    <button onclick="login()" class="login-btn">Masuk</button>
   </div>
 </div>
 
-<div id="app" style="display:none;">
-<header>
-  <div class="brand">
-    <div class="brand-icon">☕</div>
-    <div>
-      <div class="brand-name">Angkringan Koes Coffee</div>
-      <div class="brand-sub">Sistem Kasir & Keuangan</div>
+<!-- ═══════ APP SHELL ═══════ -->
+<div id="appShell" style="display:none;">
+
+  <header>
+    <div class="brand">
+      <div class="brand-icon">☕</div>
+      <div>
+        <div class="brand-name">Angkringan Koes Coffee</div>
+        <div class="brand-sub">Sistem Kasir &amp; Keuangan</div>
+      </div>
     </div>
-  </div>
-  <div style="display:flex;align-items:center;gap:12px;">
-
-  <button
-    onclick="toggleTheme()"
-    id="themeBtn"
-    style="
-      background:none;
-      border:1px solid rgba(255,255,255,0.15);
-      color:white;
-      border-radius:10px;
-      padding:8px 12px;
-      cursor:pointer;
-    ">
-    🌙
-  </button>
-  <button onclick="logout()" style="
-  background:none;
-  border:1px solid rgba(255,255,255,0.15);
-  color:white;
-  border-radius:10px;
-  padding:8px 12px;
-  cursor:pointer;
-">🚪</button>
-
-  <div class="header-date" id="headerDate"></div>
-
-</div>
-</header>
-
-<nav>
-  <button class="active" onclick="showPage('dashboard')">📊 Dashboard</button>
-  <button onclick="showPage('transaksi')">➕ Transaksi</button>
-  <button onclick="showPage('riwayat')">📋 Riwayat</button>
-  <button onclick="showPage('laporan')">📈 Laporan</button>
-</nav>
-
-<main>
-
-  <!-- ── DASHBOARD ── -->
-  <div class="page active" id="page-dashboard">
-    <div class="period-bar" id="dashPeriod">
-      <button class="period-btn active" onclick="setDashPeriod('today',this)">Hari Ini</button>
-      <button class="period-btn" onclick="setDashPeriod('week',this)">Minggu Ini</button>
-      <button class="period-btn" onclick="setDashPeriod('month',this)">Bulan Ini</button>
-      <button class="period-btn" onclick="setDashPeriod('all',this)">Semua</button>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button onclick="toggleDark()" id="themeBtn"
+        style="background:none;border:1px solid rgba(255,255,255,0.15);color:white;border-radius:10px;padding:8px 12px;cursor:pointer;">🌙</button>
+      <button onclick="logout()"
+        style="background:none;border:1px solid rgba(255,255,255,0.15);color:white;border-radius:10px;padding:8px 12px;cursor:pointer;">🚪</button>
+      <div class="header-date" id="headerDate"></div>
     </div>
-    <div class="card">
-  <h3>Cash</h3>
-  <p id="cashTotal">Rp 0</p>
-</div>
+  </header>
 
-<div class="card">
-  <h3>QRIS</h3>
-  <p id="qrisTotal">Rp 0</p>
-</div>
+  <nav>
+    <button class="active" onclick="showPage('dashboard',this)">📊 Dashboard</button>
+    <button onclick="showPage('jualCepat',this)">☕ Jual Cepat</button>
+    <button onclick="showPage('riwayat',this)">📋 Riwayat</button>
+    <button onclick="showPage('laporan',this)">📈 Laporan</button>
+  </nav>
 
+  <main>
 
-    <div class="quick-menu">
-  <button class="quick-btn" onclick="showPage('transaksi')">
-    ➕ Tambah Transaksi
-  </button>
+    <!-- ═══════ DASHBOARD ═══════ -->
+    <div class="page active" id="page-dashboard">
+      <div class="period-bar" id="dashPeriod">
+        <button class="period-btn active" onclick="setDashPeriod('today',this)">Hari Ini</button>
+        <button class="period-btn" onclick="setDashPeriod('week',this)">Minggu Ini</button>
+        <button class="period-btn" onclick="setDashPeriod('month',this)">Bulan Ini</button>
+        <button class="period-btn" onclick="setDashPeriod('all',this)">Semua</button>
+      </div>
 
-  <button class="quick-btn" onclick="showPage('riwayat')">
-    📋 Riwayat
-  </button>
+      <!-- Ringkasan Metode Bayar -->
+      <div class="cards" style="margin-bottom:1rem;">
+        <div class="card income"><div class="card-label">💵 Cash</div><p id="cashTotal" class="card-value green">Rp 0</p></div>
+        <div class="card income"><div class="card-label">📱 QRIS</div><p id="qrisTotal" class="card-value green">Rp 0</p></div>
+      </div>
 
-  <button class="quick-btn" onclick="showPage('laporan')">
-    📈 Laporan
-  </button>
+      <!-- Shortcut -->
+      <div class="quick-menu">
+        <button class="quick-btn" onclick="showPage('jualCepat',document.querySelectorAll('nav button')[1])">☕ Jual Cepat</button>
+        <button class="quick-btn" onclick="showPage('riwayat',document.querySelectorAll('nav button')[2])">📋 Riwayat</button>
+        <button class="quick-btn" onclick="showPage('laporan',document.querySelectorAll('nav button')[3])">📈 Laporan</button>
+      </div>
 
-  <button class="quick-btn" onclick="quickSale()">
-    ☕ Jual Cepat
-  </button>
-</div>
+      <!-- Summary Cards -->
+      <div class="cards" id="dashCards"></div>
 
-    <div class="cards" id="dashCards"></div>
-    <div class="chart-area">
-  <h2 class="section-title">
-    Grafik Keuangan
-    <span>7 Hari Terakhir</span>
-  </h2>
+      <!-- Chart.js Line Chart -->
+      <div class="chart-area">
+        <h2 class="section-title">Grafik Keuangan <span>7 Hari Terakhir</span></h2>
+        <canvas id="financeChart" height="120"></canvas>
+      </div>
 
-  <canvas id="financeChart" height="120"></canvas>
-</div>
+      <!-- CSS Bar Chart per Kategori -->
+      <div class="section-title">Per Kategori <span id="dashPeriodLabel">— Hari Ini</span></div>
+      <div class="chart-area">
+        <div class="bar-chart" id="dashChart"></div>
+      </div>
 
-    <div class="section-title">Grafik Keuangan <span id="dashPeriodLabel">— Hari Ini</span></div>
-    <div class="chart-area">
-      <div class="bar-chart" id="dashChart"></div>
+      <!-- Transaksi Terbaru -->
+      <div class="section-title">Transaksi Terbaru</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Waktu</th><th>Keterangan</th><th>Kategori</th><th>Tipe</th><th>Jumlah</th></tr></thead>
+          <tbody id="dashTbody"></tbody>
+        </table>
+      </div>
     </div>
 
-    <div class="section-title">Transaksi Terbaru</div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr>
-          <th>Waktu</th><th>Keterangan</th><th>Kategori</th><th>Tipe</th><th>Jumlah</th>
-        </tr></thead>
-        <tbody id="dashRecent"></tbody>
-      </table>
-    </div>
-  </div>
+    <!-- ═══════ JUAL CEPAT ═══════ -->
+    <div class="page" id="page-jualCepat">
 
-  <!-- ── TRANSAKSI ── -->
-  
+      <!-- Layout 2 kolom: kiri=menu, kanan=cart -->
+      <div class="transaksi-layout">
 
-  <div class="page" id="page-transaksi">
-    <div class="section-title">Menu Minuman</div>
+        <!-- KIRI: Tab Kategori + Grid Menu (dinamis dari MENU_DATA) -->
+        <div class="menu-section">
+          <div class="section-title">Menu <span>klik item untuk tambah ke keranjang</span></div>
+          <div class="cat-tabs" id="catTabs"></div>    <!-- diisi oleh cart.js -->
+          <div class="menu-grid" id="menuGrid"></div>  <!-- diisi oleh cart.js -->
+        </div>
 
-<!-- COFFEE -->
-<div class="expense-group">
-  <h3>☕ Coffee (Hot / Cold)</h3>
-  <div class="menu-grid">
-    <div class="menu-card" onclick="showTempSelector({name:'Americano', hot:14000, cold:15000})">
-      <h3>Americano</h3>
-      <p>14K / 15K</p>
-    </div>
-
-    <div class="menu-card" onclick="showTempSelector({name:'Sanger', hot:15000, cold:16000})">
-      <h3>Sanger</h3>
-      <p>15K / 16K</p>
-    </div>
-
-    <div class="menu-card" onclick="showTempSelector({name:'Kopi Susu Gula Aren', hot:16000, cold:17000})">
-      <h3>Kopi Susu Gula Aren</h3>
-      <p>16K / 17K</p>
-    </div>
-
-    <div class="menu-card" onclick="showTempSelector({name:'Salted Caramel', hot:16000, cold:18000})">
-      <h3>Salted Caramel</h3>
-      <p>16K / 18K</p>
-    </div>
-
-    <div class="menu-card" onclick="showTempSelector({name:'Butterscotch Latte', hot:16000, cold:18000})">
-      <h3>Butterscotch Latte</h3>
-      <p>16K / 18K</p>
-    </div>
-
-    <div class="menu-card" onclick="showTempSelector({name:'Hazelnut Latte', hot:16000, cold:18000})">
-      <h3>Hazelnut Latte</h3>
-      <p>16K / 18K</p>
-    </div>
-
-    <div class="menu-card" onclick="showTempSelector({name:'Pandan Latte', hot:16000, cold:18000})">
-      <h3>Pandan Latte</h3>
-      <p>16K / 18K</p>
-    </div>
-
-    <!-- Hanya Cold (hot: 0) -->
-    <div class="menu-card" onclick="showTempSelector({name:'Kopi Andalan Koes', hot:0, cold:20000})">
-      <h3>Kopi Andalan Koes</h3>
-      <p>20K</p>
-    </div>
-
-    <div class="menu-card" onclick="showTempSelector({name:'Sanger Koes', hot:0, cold:18000})">
-      <h3>Sanger Koes</h3>
-      <p>18K</p>
-    </div>
-  </div>
-</div>
-
-
-<!-- NON COFFEE -->
-<div class="expense-group">
-  <h3>🍵 Non Coffee (Hot / Cold)</h3>
-  <div class="menu-grid">
-    <div class="menu-card" onclick="showTempSelector({name:'Cokelat Latte', hot:16000, cold:17000})">
-      <h3>Cokelat Latte</h3>
-      <p>16K / 17K</p>
-    </div>
-
-    <div class="menu-card" onclick="showTempSelector({name:'Matcha Latte', hot:16000, cold:17000})">
-      <h3>Matcha Latte</h3>
-      <p>16K / 17K</p>
-    </div>
-
-    <div class="menu-card" onclick="showTempSelector({name:'Taro Latte', hot:16000, cold:17000})">
-      <h3>Taro Latte</h3>
-      <p>16K / 17K</p>
-    </div>
-
-    <div class="menu-card" onclick="showTempSelector({name:'Red Velvet Latte', hot:16000, cold:17000})">
-      <h3>Red Velvet Latte</h3>
-      <p>16K / 17K</p>
-    </div>
-  </div>
-</div>
-
-
-<!-- MOCKTAIL -->
-<!-- MOCKTAIL -->
-<div class="expense-group">
-  <h3>🍹 Mocktail (Cold Only)</h3>
-  <div class="menu-grid">
-    <!-- Menggunakan showTempSelector dengan hot: 0 -->
-    <div class="menu-card" onclick="showTempSelector({name:'Rainbow Blast', hot:0, cold:16000})">
-      <h3>Rainbow Blast</h3>
-      <p>16K</p>
-    </div>
-
-    <div class="menu-card" onclick="showTempSelector({name:'Blue Ocean', hot:0, cold:16000})">
-      <h3>Blue Ocean</h3>
-      <p>16K</p>
-    </div>
-  </div>
-</div>
-
-<!-- TEA (Update Peach & Lychee) -->
-<div class="expense-group">
-  <h3>🍋 Tea</h3>
-  <div class="menu-grid">
-    <div class="menu-card" onclick="showTempSelector({name:'Lemon Tea', hot:14000, cold:15000})">
-      <h3>Lemon Tea</h3>
-      <p>14K / 15K</p>
-    </div>
-
-    <div class="menu-card" onclick="showTempSelector({name:'Peach Tea', hot:0, cold:17000})">
-      <h3>Peach Tea</h3>
-      <p>17K</p>
-    </div>
-
-    <div class="menu-card" onclick="showTempSelector({name:'Lychee Tea', hot:0, cold:17000})">
-      <h3>Lychee Tea</h3>
-      <p>17K</p>
-    </div>
-  </div>
-</div>
-
-<!-- YAKULT -->
-<div class="expense-group">
-  <h3>🥛 Yakult Series (Cold Only)</h3>
-  <div class="menu-grid">
-    <div class="menu-card" onclick="showTempSelector({name:'Yakult Matcha', hot:0, cold:20000})">
-      <h3>Matcha Yakult</h3>
-      <p>20K</p>
-    </div>
-
-    <div class="menu-card" onclick="showTempSelector({name:'Yakult Mango', hot:0, cold:20000})">
-      <h3>Mango Yakult</h3>
-      <p>20K</p>
-    </div>
-  </div>
-</div>
-    <div class="form-card">
-      <div class="section-title">Tambah Transaksi Baru</div>
-
-      <div class="form-row" style="margin-bottom:1rem;">
-        <div class="form-group">
-          <label>Tipe</label>
-          <div class="type-toggle">
-            <button class="type-btn income active" id="typeIncome" onclick="setType('pemasukan')">⬆ Pemasukan</button>
-            <button class="type-btn expense" id="typeExpense" onclick="setType('pengeluaran')">⬇ Pengeluaran</button>
+        <!-- KANAN: Keranjang (sticky) -->
+        <div class="cart-panel">
+          <div class="cart-panel-header">
+            <span>🛒 Keranjang</span>
+            <span class="order-badge" id="cartBadge">0</span>
+          </div>
+          <div class="cart-panel-body">
+            <div class="cart-empty" id="cartEmpty">
+              <span>☕</span>
+              <p>Pilih menu dulu...</p>
+            </div>
+            <div id="cartItems"></div>
+          </div>
+          <div class="cart-panel-footer">
+            <div class="form-group" style="margin-bottom:.75rem;">
+              <label>Nomor Meja / Nama</label>
+              <input type="text" id="orderTable" placeholder="cth: Meja 1, Take Away..." />
+            </div>
+            <div class="form-group" style="margin-bottom:.75rem;">
+              <label>Catatan</label>
+              <input type="text" id="orderNote" placeholder="Opsional..." />
+            </div>
+            <!-- Metode Bayar Cart -->
+            <div style="display:flex;gap:.5rem;margin-bottom:.75rem;">
+              <button class="pay-btn active-cash" id="orderPayCash" onclick="setOrderPay('cash')">💵 Cash</button>
+              <button class="pay-btn" id="orderPayQris" onclick="setOrderPay('qris')">📱 QRIS</button>
+            </div>
+            <div class="cart-total-row">
+              <span class="cart-total-label">Total</span>
+              <span class="cart-total-val" id="orderTotal">Rp 0</span>
+            </div>
+            <button class="btn-submit-cart" id="btnSubmitOrder" onclick="submitOrder()" disabled>
+              ✓ Simpan Semua Order
+            </button>
+            <button class="btn-clear-cart" onclick="clearCart()">✕ Kosongkan Keranjang</button>
           </div>
         </div>
-        <div class="form-group">
-          <label>Tanggal & Waktu</label>
-          <input type="datetime-local" id="txDate" />
+
+      </div><!-- /transaksi-layout -->
+
+      <!-- Form Transaksi Manual (untuk pengeluaran, koreksi, dll) -->
+      <div class="form-card manual-form">
+        <div class="section-title">Transaksi Manual <span>pengeluaran / koreksi</span></div>
+        <div class="form-row" style="margin-bottom:1rem;">
+          <div class="form-group">
+            <label>Tipe</label>
+            <div class="type-toggle">
+              <button class="type-btn income active" id="typeIncome"  onclick="setType('pemasukan')">⬆ Pemasukan</button>
+              <button class="type-btn expense"       id="typeExpense" onclick="setType('pengeluaran')">⬇ Pengeluaran</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Tanggal &amp; Waktu</label>
+            <input type="datetime-local" id="txnDate" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Keterangan</label><input type="text" id="txnDesc" placeholder="cth: Beli Es Batu" /></div>
+          <div class="form-group"><label>Jumlah (Rp)</label><input type="number" id="txnAmount" placeholder="0" min="0" /></div>
+          <div class="form-group">
+            <label>Metode Pembayaran</label>
+            <div class="type-toggle">
+              <button class="type-btn income active" id="payBtnCash" onclick="setPayMethod('cash')">💵 Cash</button>
+              <button class="type-btn expense"       id="payBtnQris" onclick="setPayMethod('qris')">📱 QRIS</button>
+            </div>
+          </div>
+          <div class="form-group"><label>Kategori</label><select id="txnCat"></select></div>
+        </div>
+        <div class="form-row" style="margin-top:.75rem;">
+          <div class="form-group" style="grid-column:1/-1;">
+            <label>Catatan</label>
+            <textarea id="txnNote" placeholder="Tambahkan catatan..."></textarea>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" onclick="saveTransaction()">✓ Simpan Transaksi</button>
+          <button class="btn btn-ghost"   onclick="resetForm()">↺ Reset</button>
         </div>
       </div>
 
-      <div class="form-row">
-        <div class="form-group">
-          <label>Keterangan</label>
-          <input type="text" id="txDesc" placeholder="cth: Penjualan kopi susu" />
-        </div>
-        <div class="form-group">
-          <label>Jumlah (Rp)</label>
-          <input type="number" id="txAmount" placeholder="0" min="0" />
-        </div>
-        <div class="field">
-  <label>METODE PEMBAYARAN</label>
-
-  <div class="payment-methods">
-
-    <button
-      type="button"
-      class="payment-btn active"
-      onclick="setPayment('cash', this)"
-    >
-      💵 CASH
-    </button>
-
-    <button
-      type="button"
-      class="payment-btn"
-      onclick="setPayment('qris', this)"
-    >
-      📱 QRIS
-    </button>
-
-  </div>
-</div>
-        <div class="form-group">
-          <label>Kategori</label>
-          <select id="txCat"></select>
-        </div>
+      <!-- Pengeluaran Cepat (dinamis dari EXPENSE_QUICK di cart.js) -->
+      <div class="fast-expense">
+        <div class="section-title" style="margin-top:1.5rem;">Pengeluaran Cepat</div>
+        <div id="expenseGroups"></div>  <!-- diisi oleh cart.js -->
       </div>
 
-      <div class="form-row" style="margin-top:0.75rem;">
-        <div class="form-group" style="grid-column: 1/-1;">
-          <label>Catatan (opsional)</label>
-          <textarea id="txNote" placeholder="Tambahkan catatan..."></textarea>
+      <!-- Kelola Kategori -->
+      <div class="section-title" style="margin-top:2rem;">Kelola Kategori</div>
+      <div class="form-card">
+        <div class="form-row">
+          <div class="form-group"><label>Nama Baru</label><input type="text" id="newCatName" placeholder="cth: Bahan Baku" /></div>
+          <div class="form-group">
+            <label>Tipe</label>
+            <select id="newCatType">
+              <option value="pemasukan">Pemasukan</option>
+              <option value="pengeluaran">Pengeluaran</option>
+              <option value="keduanya">Keduanya</option>
+            </select>
+          </div>
         </div>
+        <div class="form-actions"><button class="btn btn-primary" onclick="addCategory()">+ Tambah</button></div>
+        <div id="catList" style="margin-top:1rem;display:flex;flex-wrap:wrap;gap:.5rem;"></div>
       </div>
 
-      <div class="form-actions">
-        <button class="btn btn-primary" onclick="saveTransaction()">✓ Simpan Transaksi</button>
-        <button class="btn btn-ghost" onclick="clearForm()">↺ Reset</button>
-      </div>
-    </div>
-    <div class="fast-expense">
+    </div><!-- /page-jualCepat -->
 
-<h2>Pengeluaran Cepat</h2>
-
-<div class="expense-group">
-  <h3>Serbuk</h3>
-
-  <div class="expense-items">
-    <div class="expense-item" onclick="quickExpense('Serbuk Taro')">Taro</div>
-    <div class="expense-item" onclick="quickExpense('Serbuk Matcha')">Matcha</div>
-    <div class="expense-item" onclick="quickExpense('Serbuk Red Velvet')">Red Velvet</div>
-    <div class="expense-item" onclick="quickExpense('Serbuk Cokelat')">Cokelat</div>
-    <div class="expense-item" onclick="quickExpense('Krimer')">Krimer</div>
-  </div>
-</div>
-
-<div class="expense-group">
-  <h3>Syrup</h3>
-
-  <div class="expense-items">
-    <div class="expense-item" onclick="quickExpense('Sprite')">Sprite</div>
-    <div class="expense-item" onclick="quickExpense('Pandan')">Pandan</div>
-    <div class="expense-item" onclick="quickExpense('Karamel')">Karamel</div>
-    <div class="expense-item" onclick="quickExpense('Butterscotch')">Butterscotch</div>
-    <div class="expense-item" onclick="quickExpense('Hazelnut')">Hazelnut</div>
-    <div class="expense-item" onclick="quickExpense('Blueberry')">Blueberry</div>
-    <div class="expense-item" onclick="quickExpense('Salted Caramel')">Salted Caramel</div>
-    <div class="expense-item" onclick="quickExpense('Jeruk')">Jeruk</div>
-    <div class="expense-item" onclick="quickExpense('Leci')">Leci</div>
-    <div class="expense-item" onclick="quickExpense('Melon')">Melon</div>
-    <div class="expense-item" onclick="quickExpense('Fanta')">Fanta</div>
-    <div class="expense-item" onclick="quickExpense('Gula Aren')">Gula Aren</div>
-  </div>
-</div>
-
-<div class="expense-group">
-  <h3>Bahan Lain</h3>
-
-  <div class="expense-items">
-    <div class="expense-item" onclick="quickExpense('UHT')">UHT</div>
-    <div class="expense-item" onclick="quickExpense('Es Batu')">Es Batu</div>
-    <div class="expense-item" onclick="quickExpense('Air Galon')">Air Galon</div>
-    <div class="expense-item" onclick="quickExpense('Cup')">Cup</div>
-    <div class="expense-item" onclick="quickExpense('SKM')">SKM</div>
-    <div class="expense-item" onclick="quickExpense('Kopi')">Kopi</div>
-  </div>
-</div>
-
-<div class="expense-group">
-  <h3>Pengeluaran Lain</h3>
-
-  <input type="text" id="customExpense" placeholder="Masukkan pengeluaran lain" />
-
-  <button class="btn btn-primary" style="margin-top:1rem;" onclick="customExpense()">
-    Tambah Pengeluaran
-  </button>
-</div>
-
-</div>
-
-    <!-- Kelola Kategori -->
-    <div class="section-title">Kelola Kategori</div>
-    <div class="form-card">
-      <div class="form-row">
-        <div class="form-group">
-          <label>Nama Kategori Baru</label>
-          <input type="text" id="newCatName" placeholder="cth: Bahan Baku" />
-        </div>
-        <div class="form-group">
-          <label>Tipe</label>
-          <select id="newCatType">
+    <!-- ═══════ RIWAYAT ═══════ -->
+    <div class="page" id="page-riwayat">
+      <div class="section-title">Riwayat Transaksi</div>
+      <div class="table-wrap">
+        <div class="table-toolbar">
+          <input type="text" id="searchRiwayat" placeholder="🔍 Cari..." oninput="renderRiwayat()" style="max-width:200px;" />
+          <select id="filterType" onchange="renderRiwayat()">
+            <option value="">Semua Tipe</option>
             <option value="pemasukan">Pemasukan</option>
             <option value="pengeluaran">Pengeluaran</option>
-            <option value="keduanya">Keduanya</option>
           </select>
+          <select id="filterCat" onchange="renderRiwayat()"><option value="">Semua Kategori</option></select>
+          <input type="date" id="filterDateFrom" onchange="renderRiwayat()" />
+          <input type="date" id="filterDateTo"   onchange="renderRiwayat()" />
+          <div class="spacer"></div>
+          <button class="btn btn-ghost btn-sm" onclick="exportCSV()">⬇ Export CSV</button>
         </div>
+        <table>
+          <thead><tr><th>Tanggal</th><th>Keterangan</th><th>Kategori</th><th>Tipe</th><th>Metode</th><th>Jumlah</th><th>Aksi</th></tr></thead>
+          <tbody id="riwayatTbody"></tbody>
+        </table>
       </div>
-      <div class="form-actions">
-        <button class="btn btn-primary" onclick="addCategory()">+ Tambah Kategori</button>
-      </div>
-      <div id="catList" style="margin-top:1rem; display:flex; flex-wrap:wrap; gap:0.5rem;"></div>
-    </div>
-  </div>
-
-  <!-- ── RIWAYAT ── -->
-  <div class="page" id="page-riwayat">
-    <div class="table-wrap">
-      <div class="table-toolbar">
-        <input type="text" id="searchQ" placeholder="🔍 Cari..." oninput="renderHistory()" style="max-width:200px;" />
-        <select id="filterType" onchange="renderHistory()">
-          <option value="">Semua Tipe</option>
-          <option value="pemasukan">Pemasukan</option>
-          <option value="pengeluaran">Pengeluaran</option>
-        </select>
-        <select id="filterCat" onchange="renderHistory()">
-          <option value="">Semua Kategori</option>
-        </select>
-        <input type="date" id="filterDateFrom" onchange="renderHistory()" />
-        <input type="date" id="filterDateTo" onchange="renderHistory()" />
-        <div class="spacer"></div>
-        <button class="btn btn-ghost btn-sm" onclick="exportCSV()">⬇ Export CSV</button>
-      </div>
-      <table>
-        <thead><tr>
-          <th>Tanggal</th><th>Keterangan</th><th>Kategori</th><th>Tipe</th><th>Jumlah</th><th>Aksi</th>
-        </tr></thead>
-        <tbody id="historyBody"></tbody>
-      </table>
-    </div>
-    <div id="historyEmpty" class="empty" style="display:none;">
-      <div class="empty-icon">📭</div>
-      <div class="empty-text">Belum ada transaksi ditemukan</div>
-    </div>
-  </div>
-
-  <!-- ── LAPORAN ── -->
-  <div class="page" id="page-laporan">
-    <div class="period-bar" id="lapPeriod">
-      <button class="period-btn active" onclick="setLapPeriod('today',this)">Hari Ini</button>
-      <button class="period-btn" onclick="setLapPeriod('week',this)">Minggu Ini</button>
-      <button class="period-btn" onclick="setLapPeriod('month',this)">Bulan Ini</button>
-      <button class="period-btn" onclick="setLapPeriod('all',this)">Semua</button>
-    </div>
-
-    <div class="cards" id="lapCards"></div>
-
-    <div class="report-grid">
-      <div class="report-block">
-        <h3>📥 Pemasukan per Kategori</h3>
-        <div id="lapIncCat"></div>
-      </div>
-      <div class="report-block">
-        <h3>📤 Pengeluaran per Kategori</h3>
-        <div id="lapExpCat"></div>
+      <div id="historyEmpty" class="empty" style="display:none;">
+        <div class="empty-icon">📭</div>
+        <div class="empty-text">Belum ada transaksi ditemukan</div>
       </div>
     </div>
 
-    <div class="section-title">Tren Harian <span id="lapTrenLabel"></span></div>
-    <div class="chart-area">
-      <div class="bar-chart" id="lapTren"></div>
+    <!-- ═══════ LAPORAN ═══════ -->
+    <div class="page" id="page-laporan">
+      <div class="period-bar" id="lapPeriod">
+        <button class="period-btn active" onclick="setLapPeriod('today',this)">Hari Ini</button>
+        <button class="period-btn" onclick="setLapPeriod('week',this)">Minggu Ini</button>
+        <button class="period-btn" onclick="setLapPeriod('month',this)">Bulan Ini</button>
+        <button class="period-btn" onclick="setLapPeriod('all',this)">Semua</button>
+      </div>
+      <div class="cards" id="lapCards"></div>
+      <div class="report-grid">
+        <div class="report-block"><h3>📥 Pemasukan per Kategori</h3><div id="lapIncCat"></div></div>
+        <div class="report-block"><h3>📤 Pengeluaran per Kategori</h3><div id="lapExpCat"></div></div>
+      </div>
+      <div class="section-title">Tren Harian <span id="lapTrenLabel"></span></div>
+      <div class="chart-area"><div class="bar-chart" id="lapTren"></div></div>
     </div>
-  </div>
 
-</main>
+  </main>
+</div><!-- /appShell -->
 
-
-
+<!-- ═══════ HOT/COLD MODAL ═══════ -->
 <div class="temp-modal" id="tempModal">
   <div class="temp-box">
-    <h2>Pilih Jenis</h2>
-
-    <button onclick="chooseTemp('hot')" class="hot-btn">
-      🔥 HOT
-    </button>
-
-    <button onclick="chooseTemp('cold')" class="cold-btn">
-      ❄️ COLD
-    </button>
+    <h2>Pilih Suhu</h2>
+    <p class="temp-menu-name" id="tempMenuTitle"></p>
+    <button onclick="chooseTemp('hot')"  class="hot-btn">🔥 HOT</button>
+    <button onclick="chooseTemp('cold')" class="cold-btn">❄️ COLD</button>
+    <button onclick="closeTempModal()" class="cancel-temp">Batal</button>
   </div>
 </div>
-<div class="toast" id="toast"></div>
 
-<!-- Modal Konfirmasi Hapus (Opsional tapi perlu agar tidak error) -->
+<!-- ═══════ KONFIRMASI HAPUS ═══════ -->
 <div class="modal-overlay" id="deleteModal">
   <div class="modal">
     <h2>Hapus Transaksi?</h2>
     <p>Tindakan ini tidak dapat dibatalkan.</p>
     <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal()">Batal</button>
+      <button class="btn btn-ghost" onclick="document.getElementById('deleteModal').classList.remove('open')">Batal</button>
       <button class="btn btn-danger" id="confirmDeleteBtn">Ya, Hapus</button>
     </div>
   </div>
 </div>
-</div>
-  
 
+<div class="toast" id="toast"></div>
+
+<!-- ═══════ SCRIPTS ═══════ -->
+<!-- Urutan loading PENTING:
+     1. Chart.js CDN (non-module, harus duluan)
+     2. js/chart.js (definisi renderFinanceChart, non-module)
+     3. js/app.js & js/cart.js (ES module, pakai import Firebase)
+-->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script type="module" src="script.js"></script>
+<script src="js/chart.js"></script>
+<script type="module" src="js/app.js"></script>
+<script type="module" src="js/cart.js"></script>
+
+<!-- Debug tool — HAPUS di production -->
 <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
 <script>eruda.init();</script>
+
 </body>
 </html>
