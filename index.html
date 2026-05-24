@@ -8,8 +8,6 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-
-<!-- ═══════ LOGIN ═══════ -->
 <div id="loginPage" class="login-page">
   <div class="login-card">
     <div class="login-logo">☕</div>
@@ -20,10 +18,7 @@
     <button onclick="login()" class="login-btn">Masuk</button>
   </div>
 </div>
-
-<!-- ═══════ APP SHELL ═══════ -->
 <div id="appShell" style="display:none;">
-
   <header>
     <div class="brand">
       <div class="brand-icon">☕</div>
@@ -33,24 +28,20 @@
       </div>
     </div>
     <div style="display:flex;align-items:center;gap:12px;">
-      <button onclick="toggleDark()" id="themeBtn"
-        style="background:none;border:1px solid rgba(255,255,255,0.15);color:white;border-radius:10px;padding:8px 12px;cursor:pointer;">🌙</button>
-      <button onclick="logout()"
-        style="background:none;border:1px solid rgba(255,255,255,0.15);color:white;border-radius:10px;padding:8px 12px;cursor:pointer;">🚪</button>
+      <button onclick="toggleDark()" id="themeBtn" style="background:none;border:1px solid rgba(255,255,255,0.15);color:white;border-radius:10px;padding:8px 12px;cursor:pointer;">🌙</button>
+      <button onclick="logout()" style="background:none;border:1px solid rgba(255,255,255,0.15);color:white;border-radius:10px;padding:8px 12px;cursor:pointer;">🚪</button>
       <div class="header-date" id="headerDate"></div>
     </div>
   </header>
-
   <nav>
     <button class="active" onclick="showPage('dashboard',this)">📊 Dashboard</button>
     <button onclick="showPage('jualCepat',this)">☕ Jual Cepat</button>
     <button onclick="showPage('riwayat',this)">📋 Riwayat</button>
     <button onclick="showPage('laporan',this)">📈 Laporan</button>
   </nav>
-
   <main>
 
-    <!-- ═══════ DASHBOARD ═══════ -->
+    <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
       <div class="period-bar" id="dashPeriod">
         <button class="period-btn active" onclick="setDashPeriod('today',this)">Hari Ini</button>
@@ -58,36 +49,17 @@
         <button class="period-btn" onclick="setDashPeriod('month',this)">Bulan Ini</button>
         <button class="period-btn" onclick="setDashPeriod('all',this)">Semua</button>
       </div>
-
-      <!-- Ringkasan Metode Bayar -->
       <div class="cards" style="margin-bottom:1rem;">
         <div class="card income"><div class="card-label">💵 Cash</div><p id="cashTotal" class="card-value green">Rp 0</p></div>
         <div class="card income"><div class="card-label">📱 QRIS</div><p id="qrisTotal" class="card-value green">Rp 0</p></div>
       </div>
-
-      <!-- Shortcut -->
-      <div class="quick-menu">
-        <button class="quick-btn" onclick="showPage('jualCepat',document.querySelectorAll('nav button')[1])">☕ Jual Cepat</button>
-        <button class="quick-btn" onclick="showPage('riwayat',document.querySelectorAll('nav button')[2])">📋 Riwayat</button>
-        <button class="quick-btn" onclick="showPage('laporan',document.querySelectorAll('nav button')[3])">📈 Laporan</button>
-      </div>
-
-      <!-- Summary Cards -->
       <div class="cards" id="dashCards"></div>
-
-      <!-- Chart.js Line Chart -->
       <div class="chart-area">
         <h2 class="section-title">Grafik Keuangan <span>7 Hari Terakhir</span></h2>
         <canvas id="financeChart" height="120"></canvas>
       </div>
-
-      <!-- CSS Bar Chart per Kategori -->
       <div class="section-title">Per Kategori <span id="dashPeriodLabel">— Hari Ini</span></div>
-      <div class="chart-area">
-        <div class="bar-chart" id="dashChart"></div>
-      </div>
-
-      <!-- Transaksi Terbaru -->
+      <div class="chart-area"><div class="bar-chart" id="dashChart"></div></div>
       <div class="section-title">Transaksi Terbaru</div>
       <div class="table-wrap">
         <table>
@@ -97,30 +69,21 @@
       </div>
     </div>
 
-    <!-- ═══════ JUAL CEPAT ═══════ -->
+    <!-- JUAL CEPAT -->
     <div class="page" id="page-jualCepat">
-
-      <!-- Layout 2 kolom: kiri=menu, kanan=cart -->
       <div class="transaksi-layout">
-
-        <!-- KIRI: Tab Kategori + Grid Menu (dinamis dari MENU_DATA) -->
         <div class="menu-section">
           <div class="section-title">Menu <span>klik item untuk tambah ke keranjang</span></div>
-          <div class="cat-tabs" id="catTabs"></div>    <!-- diisi oleh cart.js -->
-          <div class="menu-grid" id="menuGrid"></div>  <!-- diisi oleh cart.js -->
+          <div class="cat-tabs" id="catTabs"></div>
+          <div class="menu-grid" id="menuGrid"></div>
         </div>
-
-        <!-- KANAN: Keranjang (sticky) -->
         <div class="cart-panel">
           <div class="cart-panel-header">
             <span>🛒 Keranjang</span>
             <span class="order-badge" id="cartBadge">0</span>
           </div>
           <div class="cart-panel-body">
-            <div class="cart-empty" id="cartEmpty">
-              <span>☕</span>
-              <p>Pilih menu dulu...</p>
-            </div>
+            <div class="cart-empty" id="cartEmpty"><span>☕</span><p>Pilih menu dulu...</p></div>
             <div id="cartItems"></div>
           </div>
           <div class="cart-panel-footer">
@@ -132,7 +95,6 @@
               <label>Catatan</label>
               <input type="text" id="orderNote" placeholder="Opsional..." />
             </div>
-            <!-- Metode Bayar Cart -->
             <div style="display:flex;gap:.5rem;margin-bottom:.75rem;">
               <button class="pay-btn active-cash" id="orderPayCash" onclick="setOrderPay('cash')">💵 Cash</button>
               <button class="pay-btn" id="orderPayQris" onclick="setOrderPay('qris')">📱 QRIS</button>
@@ -141,16 +103,11 @@
               <span class="cart-total-label">Total</span>
               <span class="cart-total-val" id="orderTotal">Rp 0</span>
             </div>
-            <button class="btn-submit-cart" id="btnSubmitOrder" onclick="submitOrder()" disabled>
-              ✓ Simpan Semua Order
-            </button>
+            <button class="btn-submit-cart" id="btnSubmitOrder" onclick="submitOrder()" disabled>✓ Simpan Semua Order</button>
             <button class="btn-clear-cart" onclick="clearCart()">✕ Kosongkan Keranjang</button>
           </div>
         </div>
-
-      </div><!-- /transaksi-layout -->
-
-      <!-- Form Transaksi Manual (untuk pengeluaran, koreksi, dll) -->
+      </div>
       <div class="form-card manual-form">
         <div class="section-title">Transaksi Manual <span>pengeluaran / koreksi</span></div>
         <div class="form-row" style="margin-bottom:1rem;">
@@ -161,16 +118,13 @@
               <button class="type-btn expense"       id="typeExpense" onclick="setType('pengeluaran')">⬇ Pengeluaran</button>
             </div>
           </div>
-          <div class="form-group">
-            <label>Tanggal &amp; Waktu</label>
-            <input type="datetime-local" id="txnDate" />
-          </div>
+          <div class="form-group"><label>Tanggal &amp; Waktu</label><input type="datetime-local" id="txnDate" /></div>
         </div>
         <div class="form-row">
           <div class="form-group"><label>Keterangan</label><input type="text" id="txnDesc" placeholder="cth: Beli Es Batu" /></div>
           <div class="form-group"><label>Jumlah (Rp)</label><input type="number" id="txnAmount" placeholder="0" min="0" /></div>
           <div class="form-group">
-            <label>Metode Pembayaran</label>
+            <label>Metode</label>
             <div class="type-toggle">
               <button class="type-btn income active" id="payBtnCash" onclick="setPayMethod('cash')">💵 Cash</button>
               <button class="type-btn expense"       id="payBtnQris" onclick="setPayMethod('qris')">📱 QRIS</button>
@@ -179,30 +133,22 @@
           <div class="form-group"><label>Kategori</label><select id="txnCat"></select></div>
         </div>
         <div class="form-row" style="margin-top:.75rem;">
-          <div class="form-group" style="grid-column:1/-1;">
-            <label>Catatan</label>
-            <textarea id="txnNote" placeholder="Tambahkan catatan..."></textarea>
-          </div>
+          <div class="form-group" style="grid-column:1/-1;"><label>Catatan</label><textarea id="txnNote" placeholder="Opsional..."></textarea></div>
         </div>
         <div class="form-actions">
-          <button class="btn btn-primary" onclick="saveTransaction()">✓ Simpan Transaksi</button>
+          <button class="btn btn-primary" onclick="saveTransaction()">✓ Simpan</button>
           <button class="btn btn-ghost"   onclick="resetForm()">↺ Reset</button>
         </div>
       </div>
-
-      <!-- Pengeluaran Cepat (dinamis dari EXPENSE_QUICK di cart.js) -->
       <div class="fast-expense">
         <div class="section-title" style="margin-top:1.5rem;">Pengeluaran Cepat</div>
-        <div id="expenseGroups"></div>  <!-- diisi oleh cart.js -->
+        <div id="expenseGroups"></div>
       </div>
-
-      <!-- Kelola Kategori -->
       <div class="section-title" style="margin-top:2rem;">Kelola Kategori</div>
       <div class="form-card">
         <div class="form-row">
           <div class="form-group"><label>Nama Baru</label><input type="text" id="newCatName" placeholder="cth: Bahan Baku" /></div>
-          <div class="form-group">
-            <label>Tipe</label>
+          <div class="form-group"><label>Tipe</label>
             <select id="newCatType">
               <option value="pemasukan">Pemasukan</option>
               <option value="pengeluaran">Pengeluaran</option>
@@ -213,12 +159,10 @@
         <div class="form-actions"><button class="btn btn-primary" onclick="addCategory()">+ Tambah</button></div>
         <div id="catList" style="margin-top:1rem;display:flex;flex-wrap:wrap;gap:.5rem;"></div>
       </div>
+    </div>
 
-    </div><!-- /page-jualCepat -->
-
-    <!-- ═══════ RIWAYAT ═══════ -->
+    <!-- RIWAYAT -->
     <div class="page" id="page-riwayat">
-      <div class="section-title">Riwayat Transaksi</div>
       <div class="table-wrap">
         <div class="table-toolbar">
           <input type="text" id="searchRiwayat" placeholder="🔍 Cari..." oninput="renderRiwayat()" style="max-width:200px;" />
@@ -239,12 +183,11 @@
         </table>
       </div>
       <div id="historyEmpty" class="empty" style="display:none;">
-        <div class="empty-icon">📭</div>
-        <div class="empty-text">Belum ada transaksi ditemukan</div>
+        <div class="empty-icon">📭</div><div class="empty-text">Belum ada transaksi ditemukan</div>
       </div>
     </div>
 
-    <!-- ═══════ LAPORAN ═══════ -->
+    <!-- LAPORAN -->
     <div class="page" id="page-laporan">
       <div class="period-bar" id="lapPeriod">
         <button class="period-btn active" onclick="setLapPeriod('today',this)">Hari Ini</button>
@@ -262,9 +205,9 @@
     </div>
 
   </main>
-</div><!-- /appShell -->
+</div>
 
-<!-- ═══════ HOT/COLD MODAL ═══════ -->
+<!-- MODALS -->
 <div class="temp-modal" id="tempModal">
   <div class="temp-box">
     <h2>Pilih Suhu</h2>
@@ -274,8 +217,6 @@
     <button onclick="closeTempModal()" class="cancel-temp">Batal</button>
   </div>
 </div>
-
-<!-- ═══════ KONFIRMASI HAPUS ═══════ -->
 <div class="modal-overlay" id="deleteModal">
   <div class="modal">
     <h2>Hapus Transaksi?</h2>
@@ -286,21 +227,536 @@
     </div>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
 
-<!-- ═══════ SCRIPTS ═══════ -->
-<!-- Urutan loading PENTING:
-     1. Chart.js CDN (non-module, harus duluan)
-     2. js/chart.js (definisi renderFinanceChart, non-module)
-     3. js/app.js & js/cart.js (ES module, pakai import Firebase)
--->
+<!-- Chart.js CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="js/chart.js"></script>
-<script type="module" src="js/app.js"></script>
-<script type="module" src="js/cart.js"></script>
 
-<!-- Debug tool — HAPUS di production -->
+<!-- SEMUA JS DALAM SATU SCRIPT MODULE - tidak ada import path yang bisa di-cache terpisah -->
+<script type="module">
+// ═══════════════ FIREBASE ═══════════════
+import { initializeApp }    from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, serverTimestamp, getDoc }
+  from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut }
+  from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const _app = initializeApp({
+  apiKey:"AIzaSyCeSqRWg0MNOq51EyKXerb9Yhc-Knzfo8k",
+  authDomain:"angkringan-12330.firebaseapp.com",
+  projectId:"angkringan-12330",
+  storageBucket:"angkringan-12330.firebasestorage.app",
+  messagingSenderId:"630385630007",
+  appId:"1:630385630007:web:e19e29f1512705d704d8b2"
+});
+const db   = getFirestore(_app);
+const auth = getAuth(_app);
+
+// ═══════════════ MENU DATA ═══════════════
+const MENU_DATA = {
+  "☕ Coffee":[
+    {name:"Americano",hot:14000,cold:15000},{name:"Sanger",hot:15000,cold:16000},
+    {name:"Kopi Susu Gula Aren",hot:16000,cold:17000},{name:"Salted Caramel",hot:16000,cold:18000},
+    {name:"Butterscotch Latte",hot:16000,cold:18000},{name:"Hazelnut Latte",hot:16000,cold:18000},
+    {name:"Pandan Latte",hot:16000,cold:18000},{name:"Kopi Andalan Koes",hot:null,cold:20000},
+    {name:"Sanger Koes",hot:null,cold:18000},
+  ],
+  "🍵 Non Coffee":[
+    {name:"Cokelat Latte",hot:16000,cold:17000},{name:"Matcha Latte",hot:16000,cold:17000},
+    {name:"Taro Latte",hot:16000,cold:17000},{name:"Red Velvet Latte",hot:16000,cold:17000},
+  ],
+  "🍹 Mocktail":[{name:"Rainbow Blast",hot:null,cold:16000},{name:"Blue Ocean",hot:null,cold:16000}],
+  "🍋 Tea":[
+    {name:"Lemon Tea",hot:14000,cold:15000},{name:"Peach Tea",hot:null,cold:17000},
+    {name:"Lychee Tea",hot:null,cold:17000},
+  ],
+  "🥛 Yakult":[{name:"Matcha Yakult",hot:null,cold:20000},{name:"Mango Yakult",hot:null,cold:20000}],
+};
+const EXPENSE_QUICK = {
+  "Serbuk":["Taro","Matcha","Red Velvet","Cokelat","Krimer"],
+  "Syrup":["Sprite","Pandan","Karamel","Butterscotch","Hazelnut","Blueberry","Salted Caramel","Jeruk","Leci","Melon","Fanta","Gula Aren"],
+  "Bahan Lain":["UHT","Es Batu","Air Galon","Cup","SKM","Kopi"],
+};
+
+// ═══════════════ STATE ═══════════════
+let transactions=[], categories=[
+  {id:'c1',name:'Minuman',type:'pemasukan'},{id:'c2',name:'Makanan',type:'pemasukan'},
+  {id:'c3',name:'Lainnya',type:'keduanya'},{id:'c4',name:'Bahan Baku',type:'pengeluaran'},
+  {id:'c5',name:'Operasional',type:'pengeluaran'},{id:'c6',name:'Gaji',type:'pengeluaran'},
+];
+let currentType='pemasukan', dashPeriod='today', lapPeriod='today', selectedPayment='cash';
+let cart={}, activeCat=Object.keys(MENU_DATA)[0], pendingMenu=null, cartPayMethod='cash';
+window.currentUserRole='viewer';
+
+// ═══════════════ UTILS ═══════════════
+const $   = id => document.getElementById(id);
+const fmt = n  => 'Rp '+Math.abs(n).toLocaleString('id-ID');
+const fmtRp = n => 'Rp '+Number(n).toLocaleString('id-ID');
+const fmtDate = d => new Date(d).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+const uid = () => Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const cartKey = (n,t) => n+'::'+t;
+
+function startOfDay(d){const x=new Date(d);x.setHours(0,0,0,0);return x;}
+function startOfWeek(d){const x=startOfDay(d);x.setDate(x.getDate()-x.getDay());return x;}
+function startOfMonth(d){const x=new Date(d);x.setDate(1);x.setHours(0,0,0,0);return x;}
+function filterByPeriod(list,period){
+  const now=new Date();
+  return list.filter(t=>{
+    const d=new Date(t.date);
+    if(period==='today') return d>=startOfDay(now);
+    if(period==='week')  return d>=startOfWeek(now);
+    if(period==='month') return d>=startOfMonth(now);
+    return true;
+  });
+}
+function sumBy(list,type){return list.filter(t=>t.type===type).reduce((s,t)=>s+t.amount,0);}
+function getCatName(id){return (categories.find(c=>c.id===id)||{name:id||'—'}).name;}
+
+// ═══════════════ INIT ═══════════════
+function initApp(){
+  if($('headerDate')) $('headerDate').textContent=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const now=new Date(); now.setMinutes(now.getMinutes()-now.getTimezoneOffset());
+  if($('txnDate')) $('txnDate').value=now.toISOString().slice(0,16);
+  if(localStorage.getItem('koes_theme')==='dark'){
+    document.body.classList.add('dark');
+    if($('themeBtn')) $('themeBtn').textContent='☀️';
+  }
+  populateCatSelect(); renderCatList();
+  renderMenuTabs(); renderMenuGrid(); renderExpenseGroups(); renderCart();
+  renderDash(); renderRiwayat(); renderLap();
+}
+
+// ═══════════════ NAVIGATION ═══════════════
+function showPage(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  const el=$('page-'+id); if(el) el.classList.add('active');
+  if(btn) btn.classList.add('active');
+  if(id==='riwayat') renderRiwayat();
+  if(id==='laporan') renderLap();
+  if(id==='dashboard') renderDash();
+}
+function toggleDark(){
+  document.body.classList.toggle('dark');
+  const isDark=document.body.classList.contains('dark');
+  localStorage.setItem('koes_theme',isDark?'dark':'light');
+  if($('themeBtn')) $('themeBtn').textContent=isDark?'☀️':'🌙';
+  if(typeof renderFinanceChart==='function') renderFinanceChart();
+}
+
+// ═══════════════ TYPE / PAYMENT ═══════════════
+function setType(t){
+  currentType=t;
+  $('typeIncome') ?.classList.toggle('active',t==='pemasukan');
+  $('typeExpense')?.classList.toggle('active',t==='pengeluaran');
+  populateCatSelect();
+}
+function setPayMethod(m){
+  selectedPayment=m;
+  $('payBtnCash')?.classList.toggle('active',m==='cash');
+  $('payBtnQris')?.classList.toggle('active',m==='qris');
+}
+
+// ═══════════════ KATEGORI ═══════════════
+function populateCatSelect(){
+  const sel=$('txnCat'), fSel=$('filterCat');
+  if(!sel) return;
+  const cats=categories.filter(c=>c.type===currentType||c.type==='keduanya');
+  sel.innerHTML=cats.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+  if(fSel) fSel.innerHTML='<option value="">Semua Kategori</option>'+categories.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+}
+function renderCatList(){
+  const el=$('catList'); if(!el) return;
+  el.innerHTML=categories.map(c=>`
+    <span style="display:inline-flex;align-items:center;gap:.4rem;background:var(--cream);border:1px solid var(--border);border-radius:20px;padding:.25rem .75rem;font-size:.78rem;">
+      ${c.name}<span style="font-size:.65rem;color:var(--text-soft);">(${c.type==='keduanya'?'semua':c.type})</span>
+      <button onclick="deleteCat('${c.id}')" style="background:none;border:none;cursor:pointer;color:var(--red);font-size:.8rem;padding:0;margin-left:2px;">✕</button>
+    </span>`).join('');
+}
+function addCategory(){
+  const name=$('newCatName')?.value.trim(), type=$('newCatType')?.value;
+  if(!name){showToast('⚠ Nama kategori kosong');return;}
+  categories.push({id:uid(),name,type});
+  $('newCatName').value=''; renderCatList(); populateCatSelect(); showToast('✓ Kategori ditambahkan');
+}
+function deleteCat(id){
+  categories=categories.filter(c=>c.id!==id); renderCatList(); populateCatSelect(); showToast('Kategori dihapus');
+}
+
+// ═══════════════ SIMPAN TRANSAKSI ═══════════════
+async function saveTransaction(){
+  if(window.currentUserRole==='viewer'){showToast('❌ Viewer tidak punya akses');return;}
+  const desc=$('txnDesc')?.value.trim(), amount=parseFloat($('txnAmount')?.value),
+        catId=$('txnCat')?.value, date=$('txnDate')?.value, note=$('txnNote')?.value.trim();
+  if(!desc){showToast('⚠ Keterangan wajib diisi');return;}
+  if(!amount||amount<=0){showToast('⚠ Jumlah harus > 0');return;}
+  if(!date){showToast('⚠ Tanggal wajib diisi');return;}
+  try{
+    await addDoc(collection(db,'transaksi_angkringan'),{type:currentType,desc,amount,catId,date,note,payment:selectedPayment,createdAt:serverTimestamp()});
+    showToast('✓ Tersimpan'); resetForm(); await loadTransactions();
+    if(typeof renderFinanceChart==='function') renderFinanceChart();
+  }catch(e){console.error(e);showToast('❌ Gagal simpan');}
+}
+function resetForm(){
+  if($('txnDesc'))   $('txnDesc').value='';
+  if($('txnAmount')) $('txnAmount').value='';
+  if($('txnNote'))   $('txnNote').value='';
+  const now=new Date(); now.setMinutes(now.getMinutes()-now.getTimezoneOffset());
+  if($('txnDate'))   $('txnDate').value=now.toISOString().slice(0,16);
+  setType('pemasukan');
+}
+
+// ═══════════════ HAPUS ═══════════════
+const hapusDariFirebase=async function(docId){
+  if(window.currentUserRole!=='admin'){showToast('❌ Hanya admin');return;}
+  if(!confirm('Hapus transaksi ini?')) return;
+  try{
+    await deleteDoc(doc(db,'transaksi_angkringan',docId));
+    showToast('✓ Dihapus'); await loadTransactions();
+  }catch(e){console.error(e);showToast('❌ Gagal hapus');}
+};
+
+// ═══════════════ LOAD DATA ═══════════════
+async function loadTransactions(){
+  try{
+    const snap=await getDocs(collection(db,'transaksi_angkringan'));
+    transactions=[];
+    snap.forEach(d=>transactions.push({id:d.id,...d.data()}));
+    transactions.sort((a,b)=>new Date(b.date)-new Date(a.date));
+    window._txArr=transactions;
+    let cash=0,qris=0;
+    transactions.forEach(t=>{if(t.type==='pemasukan'){if(t.payment==='cash')cash+=Number(t.amount);if(t.payment==='qris')qris+=Number(t.amount);}});
+    if($('cashTotal')) $('cashTotal').textContent='Rp '+cash.toLocaleString('id-ID');
+    if($('qrisTotal')) $('qrisTotal').textContent='Rp '+qris.toLocaleString('id-ID');
+    renderDash(); renderRiwayat(); renderLap();
+  }catch(e){console.error(e);showToast('❌ Gagal load data');}
+}
+
+// ═══════════════ DASHBOARD ═══════════════
+function setDashPeriod(p,btn){
+  dashPeriod=p;
+  document.querySelectorAll('#dashPeriod .period-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const labels={today:'Hari Ini',week:'Minggu Ini',month:'Bulan Ini',all:'Semua'};
+  if($('dashPeriodLabel')) $('dashPeriodLabel').textContent='— '+labels[p];
+  renderDash();
+}
+function renderDash(){
+  const list=filterByPeriod(transactions,dashPeriod);
+  const inc=sumBy(list,'pemasukan'),exp=sumBy(list,'pengeluaran'),net=inc-exp;
+  const modal=inc>0?(net/inc*100).toFixed(1):'0.0';
+  if($('dashCards')) $('dashCards').innerHTML=`
+    <div class="card income"><div class="card-label">Total Pemasukan</div><div class="card-value green">${fmt(inc)}</div><div class="card-sub">${list.filter(t=>t.type==='pemasukan').length} transaksi</div></div>
+    <div class="card expense"><div class="card-label">Total Pengeluaran</div><div class="card-value red">${fmt(exp)}</div><div class="card-sub">${list.filter(t=>t.type==='pengeluaran').length} transaksi</div></div>
+    <div class="card profit"><div class="card-label">Laba Bersih</div><div class="card-value ${net>=0?'green':'red'}">${net>=0?'':'-'}${fmt(net)}</div></div>
+    <div class="card modal-profit"><div class="card-label">Margin</div><div class="card-value ${net>=0?'amber':'red'}">${modal}%</div></div>`;
+  const max=Math.max(inc,exp,1);
+  if($('dashChart')) $('dashChart').innerHTML=buildCatBar(list,'pemasukan',max)+buildCatBar(list,'pengeluaran',max)||'<div style="color:var(--text-soft);font-size:.85rem;padding:1rem 0;">Belum ada data.</div>';
+  if($('dashTbody')) $('dashTbody').innerHTML=list.slice(0,10).map(t=>`
+    <tr><td style="font-family:'DM Mono',monospace;font-size:.75rem;">${fmtDate(t.date)}</td>
+    <td>${t.desc}</td>
+    <td><span class="badge badge-${t.type==='pemasukan'?'income':'expense'}">${getCatName(t.catId)}</span></td>
+    <td><span class="badge badge-${t.type==='pemasukan'?'income':'expense'}">${t.type==='pemasukan'?'Masuk':'Keluar'}</span></td>
+    <td class="amount-${t.type==='pemasukan'?'income':'expense'}">${t.type==='pemasukan'?'+':'-'}${fmt(t.amount)}</td></tr>`).join('')
+    ||`<tr><td colspan="5"><div class="empty"><div class="empty-icon">☕</div><div class="empty-text">Belum ada transaksi</div></div></td></tr>`;
+}
+function buildCatBar(list,type,max){
+  const cats={};
+  list.filter(t=>t.type===type).forEach(t=>{const n=getCatName(t.catId);cats[n]=(cats[n]||0)+t.amount;});
+  return Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([name,val])=>`
+    <div class="bar-row"><div class="bar-label">${name}</div>
+    <div class="bar-track"><div class="bar-fill ${type==='pemasukan'?'income':'expense'}" style="width:${Math.round(val/max*100)}%"></div></div>
+    <div class="bar-val">${fmt(val)}</div></div>`).join('');
+}
+
+// ═══════════════ RIWAYAT ═══════════════
+function renderRiwayat(){
+  let list=[...transactions];
+  const q=$('searchRiwayat')?.value.toLowerCase()||'',type=$('filterType')?.value||'',
+        cat=$('filterCat')?.value||'',from=$('filterDateFrom')?.value||'',to=$('filterDateTo')?.value||'';
+  if(q)    list=list.filter(t=>t.desc.toLowerCase().includes(q));
+  if(type) list=list.filter(t=>t.type===type);
+  if(cat)  list=list.filter(t=>t.catId===cat);
+  if(from) list=list.filter(t=>t.date>=from);
+  if(to)   list=list.filter(t=>t.date<=to+'T23:59');
+  const body=$('riwayatTbody'), empty=$('historyEmpty');
+  if(empty) empty.style.display=list.length?'none':'block';
+  if(!body) return;
+  body.innerHTML=list.map(t=>`
+    <tr><td style="font-family:'DM Mono',monospace;font-size:.75rem;">${fmtDate(t.date)}</td>
+    <td><div style="font-weight:600;">${t.desc}</div>${t.note?`<div style="font-size:.75rem;color:var(--text-soft);">${t.note}</div>`:''}</td>
+    <td><span class="badge badge-${t.type==='pemasukan'?'income':'expense'}">${getCatName(t.catId)}</span></td>
+    <td><span class="badge badge-${t.type==='pemasukan'?'income':'expense'}">${t.type==='pemasukan'?'Masuk':'Keluar'}</span></td>
+    <td><span class="badge">${(t.payment||'').toUpperCase()||'-'}</span></td>
+    <td class="amount-${t.type==='pemasukan'?'income':'expense'}">${t.type==='pemasukan'?'+':'-'}${fmt(t.amount)}</td>
+    <td><button class="btn btn-danger btn-sm" onclick="hapusDariFirebase('${t.id}')">✕</button></td></tr>`).join('');
+}
+
+// ═══════════════ LAPORAN ═══════════════
+function setLapPeriod(p,btn){
+  lapPeriod=p;
+  document.querySelectorAll('#lapPeriod .period-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); renderLap();
+}
+function renderLap(){
+  const list=filterByPeriod(transactions,lapPeriod);
+  const inc=sumBy(list,'pemasukan'),exp=sumBy(list,'pengeluaran'),net=inc-exp;
+  const modal=inc>0?(net/inc*100).toFixed(1):'0.0';
+  if($('lapCards')) $('lapCards').innerHTML=`
+    <div class="card income"><div class="card-label">Pemasukan</div><div class="card-value green">${fmt(inc)}</div></div>
+    <div class="card expense"><div class="card-label">Pengeluaran</div><div class="card-value red">${fmt(exp)}</div></div>
+    <div class="card profit"><div class="card-label">Laba Bersih</div><div class="card-value ${net>=0?'green':'red'}">${net>=0?'':'-'}${fmt(net)}</div></div>
+    <div class="card modal-profit"><div class="card-label">Margin</div><div class="card-value ${net>=0?'amber':'red'}">${modal}%</div></div>`;
+  const renderCats=(type,elId)=>{
+    const cats={};
+    list.filter(t=>t.type===type).forEach(t=>{const n=getCatName(t.catId);cats[n]=(cats[n]||0)+t.amount;});
+    const total=Object.values(cats).reduce((s,v)=>s+v,0)||1;
+    const el=$(elId); if(!el) return;
+    el.innerHTML=Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([n,v])=>`
+      <div class="cat-row"><span class="cat-name">${n}</span>
+      <span class="cat-amount ${type==='pemasukan'?'amount-income':'amount-expense'}">${fmt(v)} <span style="font-size:.65rem;color:var(--text-soft);">(${(v/total*100).toFixed(0)}%)</span></span></div>`
+    ).join('')||'<div style="color:var(--text-soft);font-size:.85rem;">Tidak ada data</div>';
+  };
+  renderCats('pemasukan','lapIncCat'); renderCats('pengeluaran','lapExpCat');
+  const days={};
+  list.forEach(t=>{const d=new Date(t.date).toLocaleDateString('id-ID',{day:'2-digit',month:'short'});if(!days[d])days[d]={inc:0,exp:0};if(t.type==='pemasukan')days[d].inc+=t.amount;else days[d].exp+=t.amount;});
+  const dayEntries=Object.entries(days).slice(-14), maxVal=Math.max(...dayEntries.flatMap(([,v])=>[v.inc,v.exp]),1);
+  const labels={today:'Hari Ini',week:'Minggu Ini',month:'Bulan Ini',all:'Semua'};
+  if($('lapTrenLabel')) $('lapTrenLabel').textContent='— '+labels[lapPeriod];
+  if($('lapTren')) $('lapTren').innerHTML=dayEntries.map(([d,v])=>`
+    <div style="margin-bottom:.25rem;">
+      <div style="font-family:'DM Mono',monospace;font-size:.65rem;color:var(--text-soft);margin-bottom:.2rem;">${d}</div>
+      <div class="bar-row"><div class="bar-label" style="min-width:70px;">Masuk</div><div class="bar-track"><div class="bar-fill income" style="width:${Math.round(v.inc/maxVal*100)}%"></div></div><div class="bar-val">${fmt(v.inc)}</div></div>
+      <div class="bar-row"><div class="bar-label" style="min-width:70px;">Keluar</div><div class="bar-track"><div class="bar-fill expense" style="width:${Math.round(v.exp/maxVal*100)}%"></div></div><div class="bar-val">${fmt(v.exp)}</div></div>
+    </div>`).join('')||'<div style="color:var(--text-soft);font-size:.85rem;">Belum ada data.</div>';
+}
+
+// ═══════════════ EXPORT CSV ═══════════════
+function exportCSV(){
+  const rows=[['Tanggal','Keterangan','Kategori','Tipe','Metode','Jumlah'],...transactions.map(t=>[new Date(t.date).toLocaleString('id-ID'),`"${t.desc.replace(/"/g,'""')}"`,getCatName(t.catId),t.type,t.payment||'',t.amount])];
+  const blob=new Blob(['\uFEFF'+rows.map(r=>r.join(',')).join('\n')],{type:'text/csv'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`koes-${new Date().toISOString().slice(0,10)}.csv`; a.click();
+  showToast('✓ CSV diunduh');
+}
+
+// ═══════════════ MENU TABS ═══════════════
+function renderMenuTabs(){
+  const el=$('catTabs'); if(!el) return;
+  el.innerHTML=Object.keys(MENU_DATA).map(cat=>`
+    <button class="cat-tab ${cat===activeCat?'active':''}" onclick="switchCat('${cat.replace(/'/g,"\\'")}',this)">${cat}</button>`).join('');
+}
+function switchCat(cat,btn){
+  activeCat=cat;
+  document.querySelectorAll('.cat-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); renderMenuGrid();
+}
+function renderMenuGrid(){
+  const el=$('menuGrid'); if(!el) return;
+  el.innerHTML=(MENU_DATA[activeCat]||[]).map(item=>{
+    const hq=(cart[cartKey(item.name,'hot')]?.qty||0), cq=(cart[cartKey(item.name,'cold')]?.qty||0), tq=hq+cq;
+    const pl=item.hot&&item.cold?`${fmtRp(item.hot)} / ${fmtRp(item.cold)}`:fmtRp(item.hot||item.cold);
+    return `<div class="menu-card" onclick="menuClick('${item.name.replace(/'/g,"\\'")}')">
+      ${tq>0?`<span class="in-cart-badge">${tq}×</span>`:''}
+      <h3>${item.name}</h3><p>${pl}</p></div>`;
+  }).join('');
+}
+function renderExpenseGroups(){
+  const el=$('expenseGroups'); if(!el) return;
+  el.innerHTML=Object.entries(EXPENSE_QUICK).map(([g,items])=>`
+    <div class="expense-group"><h3>${g}</h3>
+    <div class="expense-items">${items.map(i=>`<div class="expense-item" onclick="quickExpense('${i}')">${i}</div>`).join('')}</div>
+    </div>`).join('')
+  +`<div class="expense-group"><h3>Pengeluaran Lain</h3>
+    <div class="form-row">
+      <div class="form-group"><label>Nama</label><input type="text" id="otherExpName" placeholder="Nama bahan..." /></div>
+      <div class="form-group"><label>Jumlah (Rp)</label><input type="number" id="otherExpAmt" placeholder="0" min="0" /></div>
+    </div>
+    <div class="form-actions"><button class="btn btn-primary btn-sm" onclick="saveOtherExpense()">+ Tambah</button></div>
+  </div>`;
+}
+
+// ═══════════════ CART ═══════════════
+function addToCart(item,temp){
+  const price=temp==='hot'?item.hot:item.cold;
+  if(!price||price<=0){showToast('⚠ Menu tidak tersedia');return;}
+  const key=cartKey(item.name,temp);
+  if(cart[key]) cart[key].qty++; else cart[key]={name:item.name,temp,price,qty:1};
+  renderCart(); renderMenuGrid();
+}
+function removeFromCart(key){
+  if(!cart[key]) return; cart[key].qty--;
+  if(cart[key].qty<=0) delete cart[key];
+  renderCart(); renderMenuGrid();
+}
+function addQtyCart(key){if(cart[key]){cart[key].qty++;renderCart();renderMenuGrid();}}
+function clearCart(){cart={};renderCart();renderMenuGrid();}
+function renderCart(){
+  const entries=Object.entries(cart);
+  const ti=entries.reduce((s,[,v])=>s+v.qty,0), tp=entries.reduce((s,[,v])=>s+v.price*v.qty,0);
+  if($('cartBadge'))   $('cartBadge').textContent=ti;
+  if($('orderTotal'))  $('orderTotal').textContent=fmtRp(tp);
+  if($('btnSubmitOrder')) $('btnSubmitOrder').disabled=entries.length===0;
+  const emptyEl=$('cartEmpty'), listEl=$('cartItems');
+  if(!listEl) return;
+  if(entries.length===0){if(emptyEl)emptyEl.style.display='block';listEl.innerHTML='';return;}
+  if(emptyEl) emptyEl.style.display='none';
+  listEl.innerHTML=entries.map(([key,v])=>`
+    <div class="cart-item">
+      <div class="cart-item-info">
+        <div class="cart-item-name">${v.name}</div>
+        <div class="cart-item-temp ${v.temp}">${v.temp==='hot'?'🔥 Hot':'❄️ Cold'} · ${fmtRp(v.price)}</div>
+      </div>
+      <div class="qty-ctrl">
+        <button class="qty-btn" onclick="removeFromCart('${key}')">−</button>
+        <span class="qty-num">${v.qty}</span>
+        <button class="qty-btn" onclick="addQtyCart('${key}')">+</button>
+      </div>
+      <div class="cart-item-price">${fmtRp(v.price*v.qty)}</div>
+    </div>`).join('');
+}
+function setOrderPay(m){
+  cartPayMethod=m;
+  $('orderPayCash')?.classList.toggle('active-cash',m==='cash');
+  $('orderPayQris')?.classList.toggle('active-qris',m==='qris');
+}
+async function submitOrder(){
+  if(window.currentUserRole==='viewer'){showToast('❌ Viewer tidak punya akses');return;}
+  const entries=Object.entries(cart);
+  if(!entries.length){showToast('⚠ Keranjang kosong!');return;}
+  const tableNote=$('orderTable')?.value.trim()||'', extraNote=$('orderNote')?.value.trim()||'';
+  const now=new Date().toISOString().slice(0,16), batchId=Date.now().toString(36);
+  const note=[tableNote?`Meja: ${tableNote}`:'',extraNote,`Batch: ${batchId}`].filter(Boolean).join(' | ');
+  try{
+    await Promise.all(entries.map(([,v])=>addDoc(collection(db,'transaksi_angkringan'),{
+      type:'pemasukan',desc:`${v.name} (${v.temp.toUpperCase()})${v.qty>1?' ×'+v.qty:''}`,
+      amount:v.price*v.qty,catId:'c1',date:now,note,payment:cartPayMethod,createdAt:serverTimestamp()
+    })));
+    const total=entries.reduce((s,[,v])=>s+v.price*v.qty,0);
+    showToast(`✓ ${entries.length} item → ${fmtRp(total)}`);
+    clearCart();
+    if($('orderTable')) $('orderTable').value='';
+    if($('orderNote'))  $('orderNote').value='';
+    await loadTransactions();
+    if(typeof renderFinanceChart==='function') renderFinanceChart();
+  }catch(e){console.error(e);showToast('❌ Gagal simpan');}
+}
+
+// ═══════════════ PENGELUARAN CEPAT ═══════════════
+async function quickExpense(name){
+  if(window.currentUserRole==='viewer'){showToast('❌ Viewer tidak punya akses');return;}
+  const amt=prompt(`Jumlah untuk "${name}" (Rp)?`);
+  if(!amt||isNaN(amt)) return;
+  try{
+    await addDoc(collection(db,'transaksi_angkringan'),{type:'pengeluaran',desc:`Beli ${name}`,amount:parseFloat(amt),catId:'c4',date:new Date().toISOString().slice(0,16),note:'',payment:'cash',createdAt:serverTimestamp()});
+    showToast(`✓ Pengeluaran ${name} disimpan`); await loadTransactions();
+  }catch(e){console.error(e);showToast('❌ Gagal');}
+}
+async function saveOtherExpense(){
+  if(window.currentUserRole==='viewer'){showToast('❌ Viewer tidak punya akses');return;}
+  const name=$('otherExpName')?.value.trim(), amt=parseFloat($('otherExpAmt')?.value);
+  if(!name||!amt){showToast('⚠ Isi nama dan jumlah');return;}
+  try{
+    await addDoc(collection(db,'transaksi_angkringan'),{type:'pengeluaran',desc:name,amount:amt,catId:'c5',date:new Date().toISOString().slice(0,16),note:'',payment:'cash',createdAt:serverTimestamp()});
+    if($('otherExpName')) $('otherExpName').value='';
+    if($('otherExpAmt'))  $('otherExpAmt').value='';
+    showToast('✓ Tersimpan'); await loadTransactions();
+  }catch(e){console.error(e);showToast('❌ Gagal');}
+}
+
+// ═══════════════ HOT/COLD MODAL ═══════════════
+function menuClick(name){
+  const item=Object.values(MENU_DATA).flat().find(i=>i.name===name); if(!item) return;
+  const hasHot=item.hot&&item.hot>0, hasCold=item.cold&&item.cold>0;
+  if(hasHot&&!hasCold){addToCart(item,'hot');return;}
+  if(hasCold&&!hasHot){addToCart(item,'cold');return;}
+  pendingMenu=item;
+  if($('tempMenuTitle')) $('tempMenuTitle').textContent=item.name;
+  $('tempModal')?.classList.add('active');
+}
+function chooseTemp(temp){if(pendingMenu) addToCart(pendingMenu,temp); closeTempModal();}
+function closeTempModal(){$('tempModal')?.classList.remove('active');pendingMenu=null;}
+
+// ═══════════════ TOAST ═══════════════
+let toastTimer;
+function showToast(msg){
+  const el=$('toast'); if(!el) return;
+  el.textContent=msg; el.classList.add('show');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('show'),2600);
+}
+
+// ═══════════════ AUTH ═══════════════
+async function login(){
+  const email=$('loginUser')?.value.trim(), pass=$('loginPass')?.value.trim();
+  if(!email||!pass){showToast('Isi email dan password');return;}
+  try{await signInWithEmailAndPassword(auth,email,pass); showToast('✓ Login berhasil');}
+  catch(e){console.error(e);showToast('❌ '+e.message);}
+}
+async function logout(){await signOut(auth); showToast('✓ Berhasil keluar');}
+
+function applyRoleSystem(){
+  if(window.currentUserRole==='viewer'){
+    document.querySelectorAll('nav button').forEach(btn=>{if(btn.textContent.includes('Jual'))btn.style.display='none';});
+    document.querySelectorAll('.btn-danger,.btn-primary,.type-btn,.expense-item,.menu-card').forEach(el=>el.style.display='none');
+  }
+}
+
+onAuthStateChanged(auth, async(user)=>{
+  const loginEl=$('loginPage'), appEl=$('appShell');
+  if(!user){
+    if(loginEl) loginEl.style.display='flex';
+    if(appEl)   appEl.style.display='none';
+    return;
+  }
+  try{
+    const snap=await getDoc(doc(db,'users',user.uid));
+    window.currentUserRole=snap.exists()?(snap.data().role||'viewer'):'viewer';
+  }catch{window.currentUserRole='viewer';}
+  applyRoleSystem();
+  if(loginEl) loginEl.style.display='none';
+  if(appEl)   appEl.style.display='block';
+  initApp(); await loadTransactions();
+  setTimeout(()=>{if(typeof renderFinanceChart==='function') renderFinanceChart();},300);
+});
+
+// ═══════════════ EXPOSE KE WINDOW ═══════════════
+Object.assign(window,{
+  login,logout,showPage,toggleDark,setType,setPayMethod,saveTransaction,resetForm,
+  addCategory,deleteCat,setDashPeriod,setLapPeriod,renderRiwayat,exportCSV,
+  hapusDariFirebase,switchCat,menuClick,addToCart,removeFromCart,addQtyCart,
+  clearCart,submitOrder,setOrderPay,chooseTemp,closeTempModal,
+  quickExpense,saveOtherExpense,loadTransactions,showToast,
+});
+</script>
+
+<!-- Chart.js render function -->
+<script>
+window.renderFinanceChart=function(){
+  const ctx=document.getElementById('financeChart'); if(!ctx) return;
+  const txArr=window._txArr||[], labels=[], incomeData=[], expenseData=[];
+  for(let i=6;i>=0;i--){
+    const d=new Date(); d.setDate(d.getDate()-i);
+    labels.push(d.toLocaleDateString('id-ID',{day:'2-digit',month:'2-digit'}));
+    const key=d.toISOString().split('T')[0];
+    let inc=0,exp=0;
+    txArr.forEach(t=>{if(t.date&&t.date.startsWith(key)){if(t.type==='pemasukan')inc+=Number(t.amount);else exp+=Number(t.amount);}});
+    incomeData.push(inc); expenseData.push(exp);
+  }
+  if(window.financeChartInstance) window.financeChartInstance.destroy();
+  const isDark=document.body.classList.contains('dark');
+  window.financeChartInstance=new Chart(ctx,{
+    type:'line',
+    data:{labels,datasets:[
+      {label:'Pemasukan',data:incomeData,borderColor:'#48ff00',backgroundColor:'rgba(72,255,0,0.15)',tension:0.4,fill:true},
+      {label:'Pengeluaran',data:expenseData,borderColor:'#ff3b3b',backgroundColor:'rgba(255,59,59,0.12)',tension:0.4,fill:true}
+    ]},
+    options:{responsive:true,plugins:{legend:{labels:{color:isDark?'#fff':'#222'}}},
+      scales:{x:{ticks:{color:isDark?'#ccc':'#444'}},y:{ticks:{color:isDark?'#ccc':'#444',callback:v=>'Rp '+Number(v).toLocaleString('id-ID')}}}}
+  });
+};
+</script>
+
+<!-- Eruda debug — HAPUS kalau sudah production -->
 <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
 <script>eruda.init();</script>
 
