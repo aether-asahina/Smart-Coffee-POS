@@ -108,12 +108,23 @@ The project is under *active development*.
 - Not intended for handling payment card data.
 
 ---
-
 ## 👤 Author
 
-**Muhammad Naufal Dzakiy** ([@aether-asahina](https://github.com/aether-asahina))
+<div align="center">
 
-Informatics Student · Developer
+**Muhammad Naufal Dzakiy**
+
+Informatics Student at STMIK Kaputama · Google Student Ambassador 2026 · Developer · AI & Web3 Learner
+
+Building practical software from an Android phone, one project at a time.
+
+[![GitHub](https://img.shields.io/badge/GitHub-aether--asahina-181717?logo=github)](https://github.com/aether-asahina)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Muhammad%20Naufal%20Dzakiy-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/muhammad-naufal-dzakiy-571757383)
+[![Instagram](https://img.shields.io/badge/Instagram-@lynnz__28-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/lynnz_28)
+
+Feedback, issues, and ideas are welcome. If you like this project, a ⭐ is appreciated.
+
+</div>
 
 ---
 
